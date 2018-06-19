@@ -1,0 +1,94 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Welcome to Glitch!</title>
+    <meta name="description" content="A cool thing made with Glitch">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    
+<script>
+function submitNewUser(e) {
+  
+      $.post("/exercise/new-user",
+    {
+        user: $('#full_name').val()
+    },
+    function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+    });
+  $('#newUser')[0].reset();
+  return false;
+}
+function submitTrackerForm(){
+    var userName = $('#user_id').val(),
+    	description = $('#description').val(),
+    	duration = $('#duration').val(),
+    	onDate = $('#onDate').val();
+  
+      $.post("/exercise/add",
+    {
+        userName: userName,
+        desc: description,
+        duration : duration,
+        tDate : onDate
+    },
+    function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+    });
+  $('#trackerForm')[0].reset();
+  return false;
+}
+</script>
+<!-- 
+<script>
+  function submitNewUser(){
+    
+  }
+  function submitTrackerForm(){
+    
+  }
+</script> -->
+<form id="newUser" onsubmit="return submitNewUser()">
+       <div class="info-text">POST /api/exercise/new-user</div>
+        <div class="column-label">Full name</div>
+        <input type="text" id="full_name" name="full_name" placeholder="shrihari" />
+    <button type="submit" id="newUseSubmit">Submit</button>
+  </form>
+
+  <form id="trackerForm" onsubmit="return submitTrackerForm()">   
+         <div class="info-text">POST /api/exercise/add</div>  
+        <div class="column-label">userName</div>
+        <input type="text" id="user_id" name="user_id" placeholder="shrihari" />
+        <div class="column-label">description</div>
+        <input type="text" id="description" name="description" placeholder="burpees" />
+        <div class="column-label"> duration in mins:</div>
+        <input type="text" id="duration" name="duration" placeholder="20" />
+        <div class="column-label"> date in yyyy-mm-dd:</div>
+        <input type="text" id="onDate" name="onDate" placeholder="11-04-1994" />    
+    <button type="submit" id="trackerSubmit">Submit</button>
+  </form>
+<p class="info-text">
+GET users's exercise log: GET /exercise/log?{userName}[&from][&to][&limit]
+</p>
+<p class="info-text">
+{ } = required, [ ] = optional
+</p>
+<p class="info-text">
+from, to = dates (yyyy-mm-dd); limit = number
+</p>
+<p class="info-text">
+eg: https://track-yo.glitch.me/exercise/log?userName=shrihari&limit=1
+</p>
+    
+  </body>
+</html>
